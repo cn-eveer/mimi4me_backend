@@ -9,4 +9,4 @@ def root():
 
 if __name__ == '__main__':
     # Flaskはポート番号5000で起動
-    app.run(port=5000, debug=True)
+    app.run(port=5000)
