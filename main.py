@@ -10,7 +10,7 @@ path = 'save.mp4'
 
 causes = ['AC', 'Carn Horn', 'Kids Playing', 'Dog Bark', 'Drilling',
           'Engine Idling', 'Gun Shot', 'Jackhammer', 'Siren', 'Street Music']
-decibels = ""
+decibels = 0
 response = ""
 
 
