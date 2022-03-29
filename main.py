@@ -5,17 +5,10 @@ import librosa.display
 import numpy as np
 from tensorflow import keras
 
-model = keras.models.load_model('./')
-path = 'save.mp4'
-
-causes = ['AC', 'Carn Horn', 'Kids Playing', 'Dog Bark', 'Drilling',
-          'Engine Idling', 'Gun Shot', 'Jackhammer', 'Siren', 'Street Music']
-decibels = ""
-response = ""
-
 
 def process():
     global decibels
+    path = 'save.mp4'
     X, sample_rate = librosa.load(path, res_type='kaiser_fast')
     decibels = f'{np.average(librosa.amplitude_to_db(X))}'
     return np.mean(librosa.feature.melspectrogram(y=X, sr=sample_rate).T, axis=0).reshape((1, 16, 8, 1))
@@ -26,8 +19,13 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def respond():
-    global response
-    global causes
+    path = 'save.mp4'
+    causes = ['AC', 'Carn Horn', 'Kids Playing', 'Dog Bark', 'Drilling',
+            'Engine Idling', 'Gun Shot', 'Jackhammer', 'Siren', 'Street Music']
+    decibels = ""
+    response = ""
+    model = keras.models.load_model('./')
+
     if(request.method == 'POST'):
         # getting and saving file
         f = request.files.get('audio')
