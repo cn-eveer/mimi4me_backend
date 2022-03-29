@@ -5,12 +5,20 @@ import librosa.display
 import numpy as np
 from tensorflow import keras
 
+model = keras.models.load_model("./")
+path = 'save.mp4'
+
+causes = ['AC', 'Carn Horn', 'Kids Playing', 'Dog Bark', 'Drilling',
+          'Engine Idling', 'Gun Shot', 'Jackhammer', 'Siren', 'Street Music']
+decibels = ""
+response = ""
+
 
 def process():
-    path = 'save.mp4'
+    global decibels
     X, sample_rate = librosa.load(path, res_type='kaiser_fast')
     decibels = f'{np.average(librosa.amplitude_to_db(X))}'
-    return decibels, np.mean(librosa.feature.melspectrogram(y=X, sr=sample_rate).T, axis=0).reshape((1, 16, 8, 1))
+    return np.mean(librosa.feature.melspectrogram(y=X, sr=sample_rate).T, axis=0).reshape((1, 16, 8, 1))
 
 
 app = Flask(__name__)
@@ -18,12 +26,8 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def respond():
-    path = 'save.mp4'
-    causes = ['AC', 'Carn Horn', 'Kids Playing', 'Dog Bark', 'Drilling',
-              'Engine Idling', 'Gun Shot', 'Jackhammer', 'Siren', 'Street Music']
-    model = keras.models.load_model('./')
-
-    decibel, response = "", ""
+    global response
+    global causes
     if(request.method == 'POST'):
         # getting and saving file
         f = request.files.get('audio')
@@ -31,12 +35,12 @@ def respond():
         # processing file
         data = process()
         prediction = np.argmax(model.predict(data))
-        decibel, response = f'{causes[prediction]}'
+        response = f'{causes[prediction]}'
         os.remove(path)
         return " "
     else:
-        return jsonify({'cause': response, "decibels": decibel})
+        return jsonify({'cause': response, "decibels": decibels})
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=3000)
