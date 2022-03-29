@@ -45,10 +45,8 @@ def respond():
     global DECIBELS,CAUSES,CAUSE,PATH
 
     if(request.method == 'POST'):
-        # getting and saving file
         f = request.files.get('audio')
         f.save(PATH)
-        # processing file
         process()
         os.remove(PATH)
         return ""
