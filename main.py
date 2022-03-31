@@ -11,7 +11,7 @@ warnings.filterwarnings('ignore')
 MODEL = keras.models.load_model("./")
 PATH = 'save.mp4'
 
-CAUSES = ['AC', 'Carn Horn', 'Kids Playing', 'Dog Bark', 'Drilling',
+CAUSES = ['AC', 'Carn Hunks', 'Kids Playing', 'Dog Bark', 'Drilling',
           'Engine Idling', 'Gun Shot', 'Jackhammer', 'Silent', 'Street Music']
 DECIBELS = 0
 CAUSE = ""
