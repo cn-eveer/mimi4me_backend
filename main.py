@@ -31,7 +31,6 @@ def process():
         y=x, sr=sample_rate).T, axis=0
     ).reshape((1, 16, 8, 1))
 
-    print(int(noise_max),int(noise_mean),int(noise_min))
     if noise_min == 0 or noise_mean*2 < noise_max:
         noise = noise_max - noise_mean
     else:
@@ -44,7 +43,6 @@ def process():
 
     prediction = np.argmax(MODEL.predict(data))
     CAUSE = f'{CAUSES[prediction]}'
-    print(DECIBELS,CAUSE)
 
 app = Flask(__name__)
 
