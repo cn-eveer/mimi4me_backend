@@ -33,7 +33,7 @@ def process():
 
     print(int(noise_max),int(noise_mean),int(noise_min))
     if noise_min == 0 or noise_mean*2 < noise_max:
-        noise = noise_max - noise_mean
+        noise = noise_max - noise_mean*2
     else:
         noise = noise_mean
     if noise_max > 80:
