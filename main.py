@@ -12,7 +12,7 @@ MODEL = keras.models.load_model("./")
 PATH = 'save.mp4'
 
 CAUSES = ['AC', 'Car Honks', 'Kids Playing', 'Dog Bark', 'Drilling',
-          'Engine Idling', 'Gun Shot', 'Jackhammer', 'Silent', 'Street Music']
+          'Engine Idling', 'Gun Shot', 'Jackhammer', 'Siren', 'Street Music']
 DECIBELS = 0
 CAUSE = ""
 
